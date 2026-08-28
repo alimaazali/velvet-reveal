@@ -11,7 +11,7 @@ const SCRIPT_CLASS: Record<string, string> = {
 export function Invocation({ data }: { data: InvocationData }) {
   if (data.type === "none" || !data.text) return null;
 
-  const scriptClass = SCRIPT_CLASS[data.script ?? "latin"] ?? SCRIPT_CLASS.latin;
+  const scriptClass = SCRIPT_CLASS[data.script ?? "latin"] ?? "font-display italic";
 
   return (
     <section className="relative px-6 pb-14 pt-24 sm:pt-28" aria-label="Invocation">
