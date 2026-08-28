@@ -132,13 +132,211 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
 }
 
+/* ---------------------------------------------------------------
+ * Wedding invitation design system
+ * --------------------------------------------------------------- */
+
+:root {
+  --ink: oklch(0.13 0.02 25);
+  --ink-deep: oklch(0.09 0.015 25);
+  --wine: oklch(0.24 0.09 20);
+  --wine-deep: oklch(0.17 0.07 18);
+  --wine-lift: oklch(0.34 0.12 22);
+  --gold: oklch(0.78 0.11 85);
+  --gold-soft: oklch(0.86 0.07 88);
+  --gold-deep: oklch(0.58 0.1 78);
+  --ivory: oklch(0.95 0.015 85);
+  --champagne: oklch(0.83 0.035 85);
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-ink-deep: var(--ink-deep);
+  --color-wine: var(--wine);
+  --color-wine-deep: var(--wine-deep);
+  --color-wine-lift: var(--wine-lift);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-gold-deep: var(--gold-deep);
+  --color-ivory: var(--ivory);
+  --color-champagne: var(--champagne);
+  --font-display: "Cormorant Garamond", "Times New Roman", serif;
+  --font-body: "Jost", ui-sans-serif, system-ui, sans-serif;
+  --font-arabic: "Amiri", "Noto Naskh Arabic", serif;
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
   }
 
+  html,
   body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    background-color: var(--ink-deep);
+    color: var(--ivory);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--gold) 40%, transparent);
+    color: var(--ivory);
   }
 }
+
+/* Gold hairline / ornament helpers */
+@utility gold-rule {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--gold) 70%, transparent),
+    transparent
+  );
+  height: 1px;
+}
+
+@utility gold-text {
+  background: linear-gradient(
+    100deg,
+    var(--gold-deep),
+    var(--gold-soft) 40%,
+    var(--gold) 60%,
+    var(--gold-deep)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility stage-bg {
+  background:
+    radial-gradient(
+      120% 80% at 50% 34%,
+      color-mix(in oklab, var(--wine) 55%, transparent) 0%,
+      transparent 62%
+    ),
+    radial-gradient(100% 70% at 50% 120%, color-mix(in oklab, var(--wine-deep) 70%, transparent), transparent 70%),
+    var(--ink-deep);
+}
+
+@utility vignette {
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      110% 75% at 50% 45%,
+      transparent 40%,
+      color-mix(in oklab, var(--ink-deep) 85%, transparent) 100%
+    );
+  }
+}
+
+/* Heavy theatrical velvet: layered fold gradients + sheen */
+@utility velvet {
+  background-image:
+    /* deep shadow pockets */
+    repeating-linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--ink) 82%, var(--wine-deep)) 0px,
+      color-mix(in oklab, var(--wine-deep) 92%, black) 9px,
+      var(--wine) 21px,
+      color-mix(in oklab, var(--wine-lift) 88%, transparent) 27px,
+      var(--wine) 33px,
+      color-mix(in oklab, var(--wine-deep) 90%, black) 44px,
+      color-mix(in oklab, var(--ink) 80%, var(--wine-deep)) 54px
+    ),
+    /* wider secondary folds for irregularity */
+    repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      color-mix(in oklab, black 30%, transparent) 61px,
+      transparent 118px,
+      color-mix(in oklab, var(--wine-lift) 22%, transparent) 150px,
+      transparent 190px
+    ),
+    /* vertical falloff */
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, black 45%, transparent) 0%,
+      transparent 22%,
+      transparent 70%,
+      color-mix(in oklab, black 55%, transparent) 100%
+    );
+  background-blend-mode: normal, overlay, normal;
+}
+
+@utility velvet-fine {
+  background-image: repeating-linear-gradient(
+    90deg,
+    color-mix(in oklab, black 22%, transparent) 0px,
+    transparent 3px,
+    color-mix(in oklab, white 4%, transparent) 6px,
+    transparent 11px
+  );
+}
+
+@utility fabric-noise {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+}
+
+@utility ink-panel {
+  background:
+    radial-gradient(120% 100% at 50% 0%, color-mix(in oklab, var(--wine-deep) 45%, transparent), transparent 60%),
+    var(--ink-deep);
+}
+
+@keyframes drift-down {
+  0% {
+    transform: translate3d(0, -10vh, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate3d(var(--drift-x, 20px), 110vh, 0) rotate(320deg);
+    opacity: 0;
+  }
+}
+
+@keyframes dust-float {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.05;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate3d(var(--dx, 12px), -60px, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes spotlight-breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
