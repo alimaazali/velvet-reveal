@@ -70,7 +70,7 @@ export function Stage({ data, open, onOpen }: StageProps) {
 
               <motion.span
                 className="mt-12 inline-flex items-center gap-3 border border-gold/40 px-6 py-3 font-body text-[0.6rem] uppercase tracking-[0.46em] text-gold-soft"
-                animate={reduced ? undefined : { opacity: [0.55, 1, 0.55] }}
+                animate={reduced ? { opacity: 1 } : { opacity: [0.55, 1, 0.55] }}
                 transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
               >
                 Tap to open
