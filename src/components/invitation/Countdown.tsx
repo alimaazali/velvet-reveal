@@ -42,9 +42,11 @@ function Unit({ value, label }: { value: number; label: string }) {
 
 export function Countdown({ dateISO }: { dateISO: string }) {
   const target = new Date(dateISO).getTime();
-  const [time, setTime] = useState(() => diff(target));
+  // Start from zeros so SSR and the first client render agree, then tick.
+  const [time, setTime] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
+    setTime(diff(target));
     const id = setInterval(() => setTime(diff(target)), 1000);
     return () => clearInterval(id);
   }, [target]);
