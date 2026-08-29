@@ -139,7 +139,7 @@ export const invitation: Invitation = {
     youtube: "",
   },
   music: {
-    src: "https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=relaxing-145038.mp3",
+    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
     title: "Ambient strings",
   },
   closing: {
