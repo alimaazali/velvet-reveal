@@ -49,7 +49,7 @@ function Index() {
   }, []);
 
   return (
-    <div className="relative min-h-svh w-full overflow-x-hidden">
+    <div className="stage-bg relative min-h-svh w-full overflow-x-hidden">
       <Stage data={invitation} open={open} onOpen={handleOpen} />
       <Petals active={revealed} />
 
